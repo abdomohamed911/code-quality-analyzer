@@ -1,0 +1,35 @@
+{
+  "name": "code-quality-analyzer",
+  "version": "1.0.0",
+  "description": "Static code analysis tool for JavaScript/TypeScript - evaluates code quality, complexity, naming conventions, and best practices",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "analyze": "node src/index.js analyze",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/ tests/"
+  },
+  "keywords": [
+    "code-quality",
+    "static-analysis",
+    "code-review",
+    "complexity",
+    "best-practices",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Abdelrahman Mohamed",
+  "license": "MIT",
+  "dependencies": {
+    "acorn": "^8.11.0",
+    "acorn-loose": "^8.4.0",
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0"
+  }
+}
