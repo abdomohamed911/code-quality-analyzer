@@ -1,13 +1,6 @@
-/**
- * Task Model - Represents a task entity
- */
-
 const VALID_STATUSES = ['pending', 'in-progress', 'completed', 'cancelled'];
 const VALID_PRIORITIES = ['low', 'medium', 'high'];
 
-/**
- * Task class with validation
- */
 class Task {
   constructor(data = {}) {
     this.id = data.id;
@@ -23,10 +16,6 @@ class Task {
     this.validate();
   }
   
-  /**
-   * Validate task data
-   * @throws {Error} If validation fails
-   */
   validate() {
     if (!this.title || typeof this.title !== 'string' || this.title.trim().length === 0) {
       throw new Error('Task title is required and must be a non-empty string');
@@ -57,10 +46,6 @@ class Task {
     }
   }
   
-  /**
-   * Convert to plain object
-   * @returns {Object} Plain task object
-   */
   toJSON() {
     return { ...this };
   }

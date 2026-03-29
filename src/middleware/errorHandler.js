@@ -1,12 +1,5 @@
-/**
- * Error Handling Middleware
- */
-
 const ApiError = require('../utils/ApiError');
 
-/**
- * Global error handler
- */
 function errorHandler(err, req, res, next) {
   // Handle known API errors
   if (err instanceof ApiError) {

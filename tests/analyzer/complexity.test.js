@@ -1,7 +1,3 @@
-/**
- * Tests for Cyclomatic Complexity Analyzer
- */
-
 const { analyzeComplexity, calculateComplexity, COMPLEXITY_THRESHOLD } = require('../../src/analyzer/complexity');
 
 describe('Cyclomatic Complexity Analyzer', () => {

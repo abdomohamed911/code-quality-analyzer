@@ -1,18 +1,5 @@
-/**
- * Discount Calculation Module
- * Refactored for readability, testability, and maintainability
- */
-
 const MAX_DISCOUNT_PERCENT = 50;
 
-/**
- * Calculates total discount for a user's cart
- * @param {Object} user - User object
- * @param {Object} cart - Shopping cart object
- * @param {Date} currentDate - Current date for time-based discounts
- * @param {Array} promotions - Active promotions array
- * @returns {number} Total discount percentage (capped at MAX_DISCOUNT_PERCENT)
- */
 function calculateDiscount(user, cart, currentDate, promotions) {
   const discounts = [
     getUserBasedDiscounts(user, currentDate),
@@ -24,12 +11,6 @@ function calculateDiscount(user, cart, currentDate, promotions) {
   return Math.min(totalDiscount, MAX_DISCOUNT_PERCENT);
 }
 
-/**
- * Calculates discounts based on user properties
- * @param {Object} user - User object
- * @param {Date} currentDate - Current date
- * @returns {number} User-based discount percentage
- */
 function getUserBasedDiscounts(user, currentDate) {
   if (!user) return 0;
   
@@ -42,11 +23,6 @@ function getUserBasedDiscounts(user, currentDate) {
   return discount;
 }
 
-/**
- * Calculates membership-based discount
- * @param {Object} user - User object
- * @returns {number} Membership discount percentage
- */
 function getMembershipDiscount(user) {
   let discount = 0;
   
@@ -60,12 +36,6 @@ function getMembershipDiscount(user) {
   return discount;
 }
 
-/**
- * Calculates birthday discount if applicable
- * @param {Object} user - User object
- * @param {Date} currentDate - Current date
- * @returns {number} Birthday discount percentage
- */
 function getBirthdayDiscount(user, currentDate) {
   if (!user.birthday) return 0;
   
@@ -78,11 +48,6 @@ function getBirthdayDiscount(user, currentDate) {
   return isBirthdayToday ? 15 : 0;
 }
 
-/**
- * Calculates loyalty discount based on purchase history
- * @param {Object} user - User object
- * @returns {number} Loyalty discount percentage
- */
 function getLoyaltyDiscount(user) {
   const { totalPurchases = 0 } = user;
   
@@ -91,11 +56,6 @@ function getLoyaltyDiscount(user) {
   return 0;
 }
 
-/**
- * Calculates discounts based on cart contents
- * @param {Object} cart - Shopping cart object
- * @returns {number} Cart-based discount percentage
- */
 function getCartBasedDiscounts(cart) {
   if (!cart?.items) return 0;
   
@@ -107,11 +67,6 @@ function getCartBasedDiscounts(cart) {
   return discount;
 }
 
-/**
- * Calculates quantity-based discount
- * @param {Array} items - Cart items array
- * @returns {number} Quantity discount percentage
- */
 function getQuantityDiscount(items) {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   
@@ -120,11 +75,6 @@ function getQuantityDiscount(items) {
   return 0;
 }
 
-/**
- * Calculates cart value-based discount
- * @param {Array} items - Cart items array
- * @returns {number} Value discount percentage
- */
 function getCartValueDiscount(items) {
   const cartTotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
@@ -133,12 +83,6 @@ function getCartValueDiscount(items) {
   return 0;
 }
 
-/**
- * Calculates discounts from active promotions
- * @param {Array} promotions - Promotions array
- * @param {Date} currentDate - Current date
- * @returns {number} Promotional discount percentage
- */
 function getPromotionalDiscounts(promotions, currentDate) {
   if (!promotions) return 0;
   
@@ -147,11 +91,6 @@ function getPromotionalDiscounts(promotions, currentDate) {
     .reduce((sum, promo) => sum + promo.discountPercent, 0);
 }
 
-/**
- * Creates a filter function to check if promotion is active
- * @param {Date} currentDate - Current date
- * @returns {Function} Filter function
- */
 function isPromotionActive(currentDate) {
   return (promotion) => {
     if (!promotion.active) return false;

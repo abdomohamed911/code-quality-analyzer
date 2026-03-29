@@ -1,22 +1,6 @@
-/**
- * Naming Convention Analyzer
- * 
- * Checks for:
- * - camelCase for variables and functions
- * - PascalCase for classes and constructors
- * - UPPER_SNAKE_CASE for constants
- * - Descriptive names (minimum length, no single letters except loop vars)
- * - No misleading names
- */
-
 const MIN_VARIABLE_NAME_LENGTH = 3;
 const EXCLUDED_SHORT_NAMES = ['i', 'j', 'k', 'x', 'y', 'z', 'e', '_', 'id', 'fn', 'cb'];
 
-/**
- * Analyze naming conventions in code
- * @param {string} code - Source code
- * @returns {Object} Naming analysis results
- */
 function analyzeNaming(code) {
   const issues = [];
   
@@ -47,9 +31,6 @@ function analyzeNaming(code) {
   };
 }
 
-/**
- * Check variable declarations for naming conventions
- */
 function checkVariableDeclarations(code, issues) {
   const varRegex = /(?:const|let|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
   let match;
@@ -86,9 +67,6 @@ function checkVariableDeclarations(code, issues) {
   }
 }
 
-/**
- * Check function declarations for naming conventions
- */
 function checkFunctionDeclarations(code, issues) {
   const funcRegex = /(?:function\s+|(?:(?:const|let|var)\s+)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*=\s*(?:async\s*)?(?:function|\([^)]*\)\s*=>))\s*([a-zA-Z_$][a-zA-Z0-9_$]*)?/g;
   const lineNumbers = getLineNumbers(code);
@@ -129,9 +107,6 @@ function checkFunctionDeclarations(code, issues) {
   }
 }
 
-/**
- * Check class declarations for PascalCase
- */
 function checkClassDeclarations(code, issues) {
   const classRegex = /class\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
   const lineNumbers = getLineNumbers(code);
@@ -153,9 +128,6 @@ function checkClassDeclarations(code, issues) {
   }
 }
 
-/**
- * Check constant declarations for UPPER_SNAKE_CASE
- */
 function checkConstantDeclarations(code, issues) {
   const constRegex = /const\s+([A-Z][A-Z0-9_]*)/g;
   const lineNumbers = getLineNumbers(code);
@@ -177,23 +149,14 @@ function checkConstantDeclarations(code, issues) {
   }
 }
 
-/**
- * Helper: Check if string is camelCase
- */
 function isCamelCase(str) {
   return /^[a-z][a-zA-Z0-9]*$/.test(str);
 }
 
-/**
- * Helper: Check if string is PascalCase
- */
 function isPascalCase(str) {
   return /^[A-Z][a-zA-Z0-9]*$/.test(str);
 }
 
-/**
- * Get line number for each character position
- */
 function getLineNumbers(code) {
   const lines = code.split('\n');
   const positions = {};
@@ -209,9 +172,6 @@ function getLineNumbers(code) {
   return positions;
 }
 
-/**
- * Count total declarations in code
- */
 function countDeclarations(code) {
   const patterns = [
     /(?:const|let|var)\s+/g,
@@ -228,9 +188,6 @@ function countDeclarations(code) {
   return count;
 }
 
-/**
- * Calculate naming score
- */
 function calculateNamingScore(issues, code) {
   const totalDeclarations = countDeclarations(code);
   if (totalDeclarations === 0) return 100;

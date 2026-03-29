@@ -1,11 +1,3 @@
-/**
- * Example of well-structured, documented code
- * This file demonstrates best practices for code quality
- */
-
-/**
- * Custom error class for validation failures
- */
 class ValidationError extends Error {
   constructor(message, field) {
     super(message);
@@ -14,22 +6,12 @@ class ValidationError extends Error {
   }
 }
 
-/**
- * User service class for managing user operations
- */
 class UserService {
   constructor(userRepository, logger) {
     this.userRepository = userRepository;
     this.logger = logger;
   }
 
-  /**
-   * Fetches a user by their unique identifier
-   * @param {string} userId - The unique user identifier
-   * @returns {Promise<Object>} The user object
-   * @throws {NotFoundError} If user is not found
-   * @throws {DatabaseError} If database operation fails
-   */
   async getUserById(userId) {
     try {
       if (!userId || typeof userId !== 'string') {
@@ -54,33 +36,17 @@ class UserService {
     }
   }
 
-  /**
-   * Sanitizes user object by removing sensitive fields
-   * @param {Object} user - Raw user object
-   * @returns {Object} Sanitized user object
-   */
   sanitizeUser(user) {
     const { password, ssn, ...sanitizedUser } = user;
     return sanitizedUser;
   }
 }
 
-/**
- * Validates email format using regex
- * @param {string} email - Email address to validate
- * @returns {boolean} True if valid email format
- */
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-/**
- * Formats a date to readable string
- * @param {Date|string} date - Date to format
- * @param {string} format - Output format ('short', 'long', 'iso')
- * @returns {string} Formatted date string
- */
 function formatDate(date, format = 'short') {
   const dateObj = date instanceof Date ? date : new Date(date);
   

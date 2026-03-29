@@ -1,7 +1,3 @@
-/**
- * Task Service - Business logic for task operations
- */
-
 const { v4: uuidv4 } = require('uuid');
 const Task = require('../models/Task');
 const { paginate } = require('../utils/pagination');
@@ -9,12 +5,6 @@ const { paginate } = require('../utils/pagination');
 // In-memory storage (would be database in production)
 const taskStore = new Map();
 
-/**
- * Find all tasks with filtering and pagination
- * @param {Object} filters - Filter criteria
- * @param {Object} options - Pagination and sorting options
- * @returns {Object} Tasks and pagination metadata
- */
 function findAll(filters = {}, options = {}) {
   let tasks = Array.from(taskStore.values());
   
@@ -50,20 +40,10 @@ function findAll(filters = {}, options = {}) {
   };
 }
 
-/**
- * Find task by ID
- * @param {string} id - Task ID
- * @returns {Object|null} Task or null if not found
- */
 function findById(id) {
   return taskStore.get(id) || null;
 }
 
-/**
- * Create new task
- * @param {Object} taskData - Task creation data
- * @returns {Object} Created task
- */
 function create(taskData) {
   const task = new Task({
     id: uuidv4(),
@@ -77,12 +57,6 @@ function create(taskData) {
   return task;
 }
 
-/**
- * Update existing task
- * @param {string} id - Task ID
- * @param {Object} updateData - Fields to update
- * @returns {Object|null} Updated task or null if not found
- */
 function update(id, updateData) {
   const existingTask = taskStore.get(id);
   
@@ -102,19 +76,10 @@ function update(id, updateData) {
   return updatedTask;
 }
 
-/**
- * Remove task by ID
- * @param {string} id - Task ID
- * @returns {boolean} True if deleted, false if not found
- */
 function remove(id) {
   return taskStore.delete(id);
 }
 
-/**
- * Get task statistics
- * @returns {Object} Task statistics
- */
 function getStatistics() {
   const tasks = Array.from(taskStore.values());
   

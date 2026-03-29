@@ -1,19 +1,3 @@
-/**
- * Error Handling Analyzer
- * 
- * Checks for:
- * - try-catch blocks around async operations
- * - Proper error propagation
- * - Error type checking
- * - Sync errors in async functions
- * - Unhandled promise rejections
- */
-
-/**
- * Analyze error handling patterns in code
- * @param {string} code - Source code
- * @returns {Object} Error handling analysis results
- */
 function analyzeErrorHandling(code) {
   const issues = [];
   const patterns = [];
@@ -41,9 +25,6 @@ function analyzeErrorHandling(code) {
   };
 }
 
-/**
- * Check if async functions have proper error handling
- */
 function checkAsyncFunctions(code, issues) {
   const asyncFuncRegex = /async\s+(?:function\s+(\w+)|(?:\([^)]*\)\s*=>|\w+\s*=>))/g;
   const tryCatchRegex = /try\s*\{/g;
@@ -86,9 +67,6 @@ function checkAsyncFunctions(code, issues) {
   }
 }
 
-/**
- * Check promise handling (.then/.catch vs await)
- */
 function checkPromiseHandling(code, issues) {
   // Look for .then without .catch
   const thenRegex = /\.then\s*\(/g;
@@ -123,9 +101,6 @@ function checkPromiseHandling(code, issues) {
   });
 }
 
-/**
- * Check if errors are properly typed
- */
 function checkErrorTypeChecking(code, issues) {
   const catchRegex = /catch\s*\(\s*(\w+)\s*\)/g;
   const lineNumbers = getLineNumbers(code);
@@ -166,9 +141,6 @@ function checkErrorTypeChecking(code, issues) {
   }
 }
 
-/**
- * Identify good error handling patterns
- */
 function identifyGoodPatterns(code, patterns) {
   // Custom error classes
   if (/class\s+\w+Error\s+extends\s+Error/.test(code)) {
@@ -203,9 +175,6 @@ function identifyGoodPatterns(code, patterns) {
   }
 }
 
-/**
- * Helper: Find matching brace
- */
 function findMatchingBrace(code, openBracePos) {
   let count = 1;
   let i = openBracePos + 1;
@@ -219,18 +188,12 @@ function findMatchingBrace(code, openBracePos) {
   return i;
 }
 
-/**
- * Helper: Find function end
- */
 function findFunctionEnd(code, startPos) {
   const braceStart = code.indexOf('{', startPos);
   if (braceStart === -1) return code.length;
   return findMatchingBrace(code, braceStart);
 }
 
-/**
- * Helper: Get line numbers
- */
 function getLineNumbers(code) {
   const lines = code.split('\n');
   const positions = {};
@@ -246,25 +209,16 @@ function getLineNumbers(code) {
   return positions;
 }
 
-/**
- * Count async functions
- */
 function countAsyncFunctions(code) {
   const matches = code.match(/async\s+/g);
   return matches ? matches.length : 0;
 }
 
-/**
- * Count try-catch blocks
- */
 function countTryCatch(code) {
   const matches = code.match(/try\s*\{/g);
   return matches ? matches.length : 0;
 }
 
-/**
- * Calculate error handling score
- */
 function calculateErrorHandlingScore(issues, patterns, code) {
   const asyncCount = countAsyncFunctions(code);
   let score = 70; // Base score

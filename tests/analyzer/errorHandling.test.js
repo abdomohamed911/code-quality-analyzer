@@ -1,7 +1,3 @@
-/**
- * Tests for Error Handling Analyzer
- */
-
 const { analyzeErrorHandling } = require('../../src/analyzer/errorHandling');
 
 describe('Error Handling Analyzer', () => {

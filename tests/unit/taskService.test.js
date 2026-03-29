@@ -1,7 +1,3 @@
-/**
- * Unit tests for Task Service
- */
-
 const taskService = require('../../src/services/taskService');
 
 describe('Task Service', () => {

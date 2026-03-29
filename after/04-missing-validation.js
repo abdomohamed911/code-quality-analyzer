@@ -1,19 +1,5 @@
-/**
- * User and data validation module
- */
-
 const ValidationError = require('./ValidationError');
 
-/**
- * Creates a new user with validation
- * @param {Object} userData - User creation data
- * @param {string} userData.name - User's full name
- * @param {string} userData.email - User's email address
- * @param {number} userData.age - User's age
- * @param {string} [userData.role] - User's role (default: 'user')
- * @returns {Object} Created user object
- * @throws {ValidationError} If validation fails
- */
 function createUser(userData) {
   // Validate input exists
   if (!userData || typeof userData !== 'object') {
@@ -69,13 +55,6 @@ function createUser(userData) {
   };
 }
 
-/**
- * Calculates total price with validation
- * @param {Array} items - Array of {price, quantity} objects
- * @param {number} discount - Discount decimal (0-1)
- * @returns {number} Calculated price
- * @throws {ValidationError} If validation fails
- */
 function calculatePrice(items, discount) {
   // Validate items
   if (!Array.isArray(items)) {
@@ -116,12 +95,6 @@ function calculatePrice(items, discount) {
   return Math.round(discountedTotal * 100) / 100; // Round to 2 decimal places
 }
 
-/**
- * Formats date string with validation
- * @param {string} dateString - Date in YYYY-MM-DD format
- * @returns {string} Formatted date in MM/DD/YYYY format
- * @throws {ValidationError} If date is invalid
- */
 function formatDate(dateString) {
   if (typeof dateString !== 'string') {
     throw new ValidationError('Date must be a string');
@@ -141,12 +114,6 @@ function formatDate(dateString) {
   return `${month}/${day}/${year}`;
 }
 
-/**
- * Searches users with null safety
- * @param {Array} users - Array of user objects
- * @param {string} query - Search query
- * @returns {Array} Matching users
- */
 function searchUsers(users, query) {
   if (!Array.isArray(users)) {
     return [];
@@ -164,10 +131,6 @@ function searchUsers(users, query) {
   });
 }
 
-/**
- * Generates a unique ID
- * @returns {string} Unique identifier
- */
 function generateId() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36);
 }

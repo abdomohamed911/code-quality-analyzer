@@ -1,5 +1,3 @@
-// PROBLEM: High cyclomatic complexity, hard to understand and test
-
 function calculateDiscount(user, cart, currentDate, promotions) {
   let discount = 0;
   

@@ -1,14 +1,6 @@
-/**
- * Task Controller - Handles HTTP request/response for tasks
- */
-
 const taskService = require('../services/taskService');
 const ApiError = require('../utils/ApiError');
 
-/**
- * Get all tasks with filtering and pagination
- * GET /api/v1/tasks
- */
 async function getAllTasks(req, res, next) {
   try {
     const { status, priority, sort, page = '1', limit = '10' } = req.query;
@@ -36,10 +28,6 @@ async function getAllTasks(req, res, next) {
   }
 }
 
-/**
- * Get single task by ID
- * GET /api/v1/tasks/:id
- */
 async function getTaskById(req, res, next) {
   try {
     const { id } = req.params;
@@ -58,10 +46,6 @@ async function getTaskById(req, res, next) {
   }
 }
 
-/**
- * Create new task
- * POST /api/v1/tasks
- */
 async function createTask(req, res, next) {
   try {
     const taskData = req.body;
@@ -76,10 +60,6 @@ async function createTask(req, res, next) {
   }
 }
 
-/**
- * Update task
- * PUT /api/v1/tasks/:id
- */
 async function updateTask(req, res, next) {
   try {
     const { id } = req.params;
@@ -100,10 +80,6 @@ async function updateTask(req, res, next) {
   }
 }
 
-/**
- * Delete task
- * DELETE /api/v1/tasks/:id
- */
 async function deleteTask(req, res, next) {
   try {
     const { id } = req.params;

@@ -1,7 +1,3 @@
-/**
- * Tests for Naming Convention Analyzer
- */
-
 const { analyzeNaming, isCamelCase, isPascalCase } = require('../../src/analyzer/naming');
 
 describe('Naming Convention Analyzer', () => {

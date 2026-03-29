@@ -1,5 +1,3 @@
-// PROBLEM: Deeply nested callbacks (callback hell)
-
 function getUserProfile(userId, callback) {
   database.query('SELECT * FROM users WHERE id = ?', [userId], function(err, user) {
     if (err) {

@@ -1,18 +1,7 @@
-/**
- * Pagination Utility
- */
-
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
 const MAX_LIMIT = 100;
 
-/**
- * Paginate an array of items
- * @param {Array} items - Items to paginate
- * @param {number} page - Page number (1-based)
- * @param {number} limit - Items per page
- * @returns {Object} Paginated result with data and metadata
- */
 function paginate(items, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT) {
   // Validate and normalize inputs
   const normalizedPage = Math.max(1, parseInt(page, 10) || DEFAULT_PAGE);
@@ -40,12 +29,6 @@ function paginate(items, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT) {
   };
 }
 
-/**
- * Build pagination links
- * @param {string} baseUrl - Base URL
- * @param {Object} pagination - Pagination metadata
- * @returns {Object} Pagination links
- */
 function buildPaginationLinks(baseUrl, pagination) {
   const { page, limit, totalPages } = pagination;
   

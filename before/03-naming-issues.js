@@ -1,5 +1,3 @@
-// PROBLEM: Poor naming makes code hard to understand
-
 function p(d, t) {
   if (t === 'a') {
     return d.filter(x => x.s === 1).map(x => x.n);

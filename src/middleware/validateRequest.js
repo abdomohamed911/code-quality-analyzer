@@ -1,12 +1,5 @@
-/**
- * Request Validation Middleware
- */
-
 const ApiError = require('../utils/ApiError');
 
-/**
- * Validate task creation request body
- */
 function validateTask(req, res, next) {
   const { title, description, priority, status, dueDate, tags } = req.body;
   
@@ -49,9 +42,6 @@ function validateTask(req, res, next) {
   next();
 }
 
-/**
- * Validate task update request body
- */
 function validateTaskUpdate(req, res, next) {
   const { title, description, priority, status, dueDate, tags } = req.body;
   

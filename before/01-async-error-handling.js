@@ -1,5 +1,3 @@
-// PROBLEM: No error handling for async operations
-
 async function fetchUserData(userId) {
   const response = await fetch(`/api/users/${userId}`);
   const data = await response.json();

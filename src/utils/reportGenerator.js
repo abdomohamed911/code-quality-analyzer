@@ -1,15 +1,3 @@
-/**
- * Report Generator Utility
- * 
- * Generates analysis reports in different formats
- */
-
-/**
- * Generate analysis report
- * @param {Array} results - Analysis results array
- * @param {Object} options - Report options
- * @returns {string} Formatted report
- */
 function generateReport(results, options = {}) {
   const { format = 'text', threshold = 70 } = options;
   
@@ -24,9 +12,6 @@ function generateReport(results, options = {}) {
   }
 }
 
-/**
- * Generate text format report
- */
 function generateTextReport(results, threshold) {
   let report = '';
   report += '='.repeat(60) + '\n';
@@ -89,9 +74,6 @@ function generateTextReport(results, threshold) {
   return report;
 }
 
-/**
- * Generate markdown format report
- */
 function generateMarkdownReport(results, threshold) {
   let report = '# Code Quality Analysis Report\n\n';
   
@@ -132,9 +114,6 @@ function generateMarkdownReport(results, threshold) {
   return report;
 }
 
-/**
- * Get score indicator emoji
- */
 function getScoreIndicator(score) {
   if (score >= 90) return '🌟';
   if (score >= 80) return '✨';
@@ -143,9 +122,6 @@ function getScoreIndicator(score) {
   return '❌';
 }
 
-/**
- * Get category label
- */
 function getCategoryLabel(category) {
   const labels = {
     complexity: 'Complexity',

@@ -1,19 +1,8 @@
-/**
- * File Parser Utility
- * 
- * Handles reading and parsing source files
- */
-
 const fs = require('fs');
 const path = require('path');
 
 const SUPPORTED_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.mjs'];
 
-/**
- * Parse a single file and return its content
- * @param {string} filePath - Path to the file
- * @returns {string|null} File content or null if unsupported
- */
 function parseFile(filePath) {
   const ext = path.extname(filePath);
   
@@ -28,11 +17,6 @@ function parseFile(filePath) {
   }
 }
 
-/**
- * Parse all supported files in a directory
- * @param {string} dirPath - Path to the directory
- * @returns {string[]} Array of file paths
- */
 function parseDirectory(dirPath) {
   const files = [];
   

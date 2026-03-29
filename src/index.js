@@ -1,15 +1,3 @@
-/**
- * Code Quality Analyzer - Main Entry Point
- * 
- * Analyzes JavaScript/TypeScript files for:
- * - Cyclomatic complexity
- * - Naming conventions
- * - Error handling patterns
- * - Documentation coverage
- * 
- * @author Abdelrahman Mohamed
- */
-
 const { Command } = require('commander');
 const fs = require('fs');
 const path = require('path');

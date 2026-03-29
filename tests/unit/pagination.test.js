@@ -1,7 +1,3 @@
-/**
- * Unit tests for Pagination Utility
- */
-
 const { paginate, buildPaginationLinks, DEFAULT_PAGE, DEFAULT_LIMIT, MAX_LIMIT } = require('../../src/utils/pagination');
 
 describe('Pagination Utility', () => {

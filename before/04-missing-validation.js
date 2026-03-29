@@ -1,5 +1,3 @@
-// PROBLEM: No input validation leads to unexpected behavior
-
 function createUser(userData) {
   return {
     id: Math.random().toString(36).substr(2),

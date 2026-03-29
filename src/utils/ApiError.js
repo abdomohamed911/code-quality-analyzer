@@ -1,7 +1,3 @@
-/**
- * Custom API Error Class
- */
-
 class ApiError extends Error {
   constructor(statusCode, message, details = null) {
     super(message);
@@ -14,11 +10,6 @@ class ApiError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
   
-  /**
-   * Get error code from status code
-   * @param {number} statusCode - HTTP status code
-   * @returns {string} Error code
-   */
   getStatusCodeCode(statusCode) {
     const codes = {
       400: 'BAD_REQUEST',

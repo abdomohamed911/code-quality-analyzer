@@ -1,8 +1,3 @@
-/**
- * Improved async error handling with proper try-catch blocks,
- * error type checking, and meaningful error messages
- */
-
 class ApiError extends Error {
   constructor(message, statusCode, details = null) {
     super(message);
@@ -12,12 +7,6 @@ class ApiError extends Error {
   }
 }
 
-/**
- * Fetches user data with proper error handling
- * @param {string} userId - User identifier
- * @returns {Promise<Object>} User data
- * @throws {ApiError} If fetch fails or response is not OK
- */
 async function fetchUserData(userId) {
   try {
     if (!userId) {
@@ -42,11 +31,6 @@ async function fetchUserData(userId) {
   }
 }
 
-/**
- * Processes an order with comprehensive error handling
- * @param {string} orderId - Order identifier
- * @returns {Promise<Object>} Processing result
- */
 async function processOrder(orderId) {
   try {
     if (!orderId) {
@@ -92,11 +76,6 @@ async function processOrder(orderId) {
   }
 }
 
-/**
- * Updates user profile with validation and error handling
- * @param {Object} profileData - Profile update data
- * @returns {Promise<boolean>} Success status
- */
 async function updateProfile(profileData) {
   try {
     if (!profileData || Object.keys(profileData).length === 0) {

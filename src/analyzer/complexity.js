@@ -1,22 +1,6 @@
-/**
- * Cyclomatic Complexity Analyzer
- * 
- * Measures code complexity by counting decision points:
- * - if, else if, else
- * - for, while, do-while loops
- * - switch cases
- * - ternary operators
- * - logical operators (&&, ||)
- */
-
 const COMPLEXITY_THRESHOLD = 10;
 const HIGH_COMPLEXITY_THRESHOLD = 15;
 
-/**
- * Analyze cyclomatic complexity of code
- * @param {string} code - Source code
- * @returns {Object} Complexity analysis results
- */
 function analyzeComplexity(code) {
   const functions = extractFunctions(code);
   const functionAnalyses = functions.map(fn => ({
@@ -46,9 +30,6 @@ function analyzeComplexity(code) {
   };
 }
 
-/**
- * Extract function declarations from code
- */
 function extractFunctions(code) {
   const lines = code.split('\n');
   const functions = [];
@@ -67,9 +48,6 @@ function extractFunctions(code) {
   return functions;
 }
 
-/**
- * Extract function body using brace matching
- */
 function extractFunctionBody(code, startIndex) {
   let braceCount = 0;
   let started = false;
@@ -91,9 +69,6 @@ function extractFunctionBody(code, startIndex) {
   return code.substring(startIndex, endIndex);
 }
 
-/**
- * Calculate cyclomatic complexity of a code block
- */
 function calculateComplexity(code) {
   let complexity = 1; // Base complexity
   
@@ -126,9 +101,6 @@ function calculateComplexity(code) {
   return Math.max(1, complexity);
 }
 
-/**
- * Calculate complexity score (0-100)
- */
 function calculateComplexityScore(functions) {
   if (functions.length === 0) return 100;
   

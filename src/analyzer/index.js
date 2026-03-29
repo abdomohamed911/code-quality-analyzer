@@ -1,18 +1,8 @@
-/**
- * Main analyzer module - orchestrates all analysis checks
- */
-
 const { analyzeComplexity } = require('./complexity');
 const { analyzeNaming } = require('./naming');
 const { analyzeErrorHandling } = require('./errorHandling');
 const { analyzeDocumentation } = require('./documentation');
 
-/**
- * Analyzes code and returns comprehensive quality report
- * @param {string} code - Source code to analyze
- * @param {string} filePath - Path to the file
- * @returns {Object} Analysis results
- */
 function analyzeCode(code, filePath) {
   const complexityResults = analyzeComplexity(code);
   const namingResults = analyzeNaming(code);
@@ -53,9 +43,6 @@ function analyzeCode(code, filePath) {
   };
 }
 
-/**
- * Generates actionable recommendations based on analysis
- */
 function generateRecommendations(results) {
   const recommendations = [];
   
