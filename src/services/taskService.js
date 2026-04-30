@@ -80,6 +80,10 @@ function remove(id) {
   return taskStore.delete(id);
 }
 
+function resetStore() {
+  taskStore.clear();
+}
+
 function getStatistics() {
   const tasks = Array.from(taskStore.values());
   
@@ -104,5 +108,6 @@ module.exports = {
   create,
   update,
   remove,
+  resetStore,
   getStatistics
 };

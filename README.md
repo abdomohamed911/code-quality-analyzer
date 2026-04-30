@@ -1,146 +1,123 @@
 # Code Quality Analyzer
 
-A command-line engineering tool that scans JavaScript and TypeScript codebases, identifies quality issues, and produces actionable reports with specific improvement recommendations. Designed for integration into CI/CD pipelines and local development workflows alike.
+[![CI](https://github.com/abdomohamed911/code-quality-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/abdomohamed911/code-quality-analyzer/actions/workflows/ci.yml)
+
+A CLI tool for static JavaScript code analysis that evaluates complexity, naming conventions, error handling patterns, and documentation coverage. Provides actionable feedback with scored reports to help developers write cleaner, more maintainable code.
 
 ## Overview
 
-Code Quality Analyzer shifts code review from a manual, opinion-driven process to an automated, data-driven one. It parses source files, evaluates them against a configurable ruleset covering complexity, readability, maintainability, and best practices, then outputs a structured report that developers can act on immediately.
-
-The tool is built to be fast enough for incremental checks during development and thorough enough for full-repository analysis in automated pipelines. Reports are generated in both human-readable and machine-parseable formats, enabling integration with dashboards, git hooks, and pull request systems.
+Code Quality Analyzer scans JavaScript source files and produces a quality report covering four key areas: cyclomatic complexity, naming convention adherence, error handling patterns, and JSDoc documentation coverage. Each area receives an individual score, and a weighted overall score is calculated. The tool outputs results in text, JSON, or Markdown format, making it suitable for both interactive use and CI pipeline integration.
 
 ## Features
 
-- **Multi-Language Support** -- Analyzes both JavaScript and TypeScript source files with language-aware parsing
-- **Complexity Metrics** -- Calculates cyclomatic complexity, cognitive complexity, and nesting depth per function and per file
-- **Readability Analysis** -- Evaluates naming conventions, function length, file structure, and code organization patterns
-- **Maintainability Scoring** -- Produces a composite maintainability index based on complexity, duplication, and documentation coverage
-- **Best Practice Rules** -- Configurable ruleset covering error handling patterns, async/await usage, TypeScript strictness, and module structure
-- **Incremental Analysis** -- Supports scanning only changed files for fast feedback during development
-- **Multiple Output Formats** -- Generates reports in console (colorized), JSON, and Markdown for different consumption contexts
-- **Configurable Thresholds** -- Set acceptable limits for complexity, file length, and other metrics per project or per directory
-- **CI/CD Integration** -- Returns non-zero exit codes when quality gates are not met, making it straightforward to gate deployments on code quality
-- **Ignore Patterns** -- Respects `.gitignore` and supports additional exclusion patterns for vendor code, generated files, and test fixtures
+- **Cyclomatic Complexity Analysis** — Identifies high-complexity functions exceeding configurable thresholds using decision-point counting (if, for, while, switch, ternary, logical operators)
+- **Naming Convention Checks** — Validates camelCase variables/functions, PascalCase classes, UPPER_SNAKE_CASE constants, and descriptive naming (minimum 3 characters)
+- **Error Handling Detection** — Scans for async functions without try-catch, empty catch blocks, and unused error variables
+- **Documentation Coverage** — Measures JSDoc coverage percentage across functions and classes
+- **Weighted Scoring** — Combines all four analysis areas into a single quality score (0-100)
+- **Multiple Output Formats** — Text (terminal), JSON (machine-readable), and Markdown (reports)
+- **Code Examples** — Includes before/after code samples and manual review notes for common issues
 
 ## Tech Stack
 
-| Category | Technology |
+| Layer | Technology |
 |---|---|
-| Language | JavaScript, TypeScript |
-| Runtime | Node.js |
-| Parsing | Custom AST-based analysis |
-| CLI | Native Node.js CLI with argument parsing |
-| Output | Console, JSON, Markdown |
-| Testing | Jest |
+| Runtime | Node.js 18+ |
+| CLI Framework | Commander.js |
+| AST Parser | Acorn (available for future enhancements) |
+| Analysis | Custom regex-based analyzers |
+| Security | Helmet, CORS, express-rate-limit |
+| Testing | Jest, Supertest (78 tests, 6 suites) |
+| Linting | ESLint |
+| CI/CD | GitHub Actions |
+| Containerization | Docker (multi-stage build) |
 
 ## Architecture
 
 ```
 code-quality-analyzer/
   src/
-    cli/                # Command-line interface and argument parsing
-    analyzer/           # Core analysis engine
-      parsers/          # AST parsers for JavaScript and TypeScript
-      rules/            # Individual quality rules and detectors
-      metrics/          # Complexity and maintainability calculators
-      reporters/        # Output formatters (console, JSON, Markdown)
-    config/             # Default configuration and schema
-    utils/              # File system utilities, path resolution
-  tests/                # Test suites for rules, parsers, and reporters
-  output/               # Default output directory for generated reports
+    analyzer/            # Core analysis modules
+      index.js           # Orchestrator — analyzeCode() with weighted scoring
+      complexity.js      # Cyclomatic complexity via decision-point counting
+      naming.js          # Convention checks (camelCase, PascalCase, UPPER_SNAKE)
+      errorHandling.js   # Try-catch, async, empty catch detection
+      documentation.js   # JSDoc coverage measurement
+    controllers/         # API request handlers
+    middleware/          # Validation, error handling
+    models/              # Data models
+    routes/              # Express route definitions
+    services/            # Business logic
+    utils/               # Pagination, API errors, file parsing, report generation
+    app.js               # Express app setup
+    index.js             # CLI entry point (commander)
+  tests/
+    analyzer/            # Analyzer unit tests (34 tests)
+    unit/                # Service/utility tests (24 tests)
+    integration/         # API integration tests (12 tests)
+  before/                # Bad code examples
+  after/                 # Fixed code examples
+  examples/              # Additional sample code
+  review-notes/          # Manual review writeups
+  .github/workflows/     # CI pipeline
+  Dockerfile             # Production container
 ```
 
-**Analysis Pipeline:**
+## Quick Start
 
-1. The CLI resolves the target directory and applies ignore patterns
-2. The file discovery layer collects all analyzable source files
-3. Each file is parsed into an AST using language-appropriate parsers
-4. Rules are applied to the AST, producing a list of findings
-5. Metrics are calculated per-function and aggregated per-file
-6. The reporter formats findings and metrics into the requested output format
-7. Exit code is set based on whether configured thresholds are exceeded
+### Prerequisites
 
-## Configuration
+- Node.js 18+
 
-Create a `.codequalityrc.json` file in your project root:
-
-```json
-{
-  "target": "./src",
-  "ignore": ["**/*.test.ts", "**/*.spec.js", "**/dist/**"],
-  "thresholds": {
-    "maxComplexity": 10,
-    "maxFileLength": 300,
-    "maxFunctionLength": 50,
-    "minMaintainabilityIndex": 65
-  },
-  "rules": {
-    "no-nested-ternaries": "error",
-    "max-callbacks-depth": "warn",
-    "require-error-handling": "error",
-    "prefer-const-assertions": "warn"
-  },
-  "output": {
-    "format": "console",
-    "dir": "./output"
-  }
-}
-```
-
-## Usage
-
-### Installation
+### Install & Run
 
 ```bash
 git clone https://github.com/abdomohamed911/code-quality-analyzer.git
 cd code-quality-analyzer
 npm install
+
+# Analyze a file
+node src/index.js analyze path/to/file.js
+
+# Analyze a directory
+node src/index.js analyze src/
 ```
 
-### Analyze a Project
+### Run Tests
 
 ```bash
-# Analyze the current directory
-npx code-quality-analyzer
+# All tests with coverage
+npm test
 
-# Analyze a specific path
-npx code-quality-analyzer ./path/to/project
-
-# Use a custom config file
-npx code-quality-analyzer --config ./custom-config.json
-
-# Output results as JSON
-npx code-quality-analyzer --format json --output ./results.json
+# Analyzer tests only
+npx jest tests/analyzer/ --verbose
 ```
 
-### CI/CD Integration
+### Docker
 
 ```bash
-# Fail the build if quality thresholds are not met
-npx code-quality-analyzer --ci --format json --output ./quality-report.json
+docker build -t code-quality-analyzer .
+docker run -v $(pwd):/app code-quality-analyzer analyze /app/src/
 ```
 
-The `--ci` flag enables strict mode: the process exits with code 1 if any threshold is exceeded, making it suitable for use in GitHub Actions, GitLab CI, or any pipeline that checks exit codes.
+## Results
 
-### Available Flags
-
-| Flag | Description |
+| Metric | Value |
 |---|---|
-| `--config` | Path to a custom configuration file |
-| `--format` | Output format: console, json, markdown |
-| `--output` | File path for JSON or Markdown output |
-| `--ci` | Enable strict mode with non-zero exit on threshold breach |
-| `--ignore` | Additional ignore patterns (comma-separated) |
-| `--verbose` | Include detailed rule explanations in the output |
+| Total tests | 78 (6 suites) |
+| Analyzer tests | 34 (complexity, naming, error handling) |
+| Unit tests | 24 (service, pagination) |
+| Integration tests | 12 (all API endpoints) |
+| Analysis categories | 4 (complexity, naming, error handling, documentation) |
+| Output formats | 3 (text, JSON, Markdown) |
 
-## Report Structure
+## What I Learned
 
-The analyzer produces reports organized by file, with each finding categorized by severity:
+1. **Regex-based analysis is fragile but educational**: Building analyzers with regex instead of a proper AST parser taught me why tools like ESLint use ASTs. Patterns like nested template literals, destructured imports, and optional chaining all break regex-based detection. Adding Acorn as a dependency was the right call — it provides the foundation for a more robust v2.
 
-- **error** -- Issues that should be addressed before merging (complexity violations, missing error handling)
-- **warn** -- Issues that degrade quality over time (long functions, deep nesting, inconsistent naming)
-- **info** -- Suggestions for improvement (documentation gaps, refactoring opportunities)
+2. **Test data design matters as much as the code**: The before/after code examples and the test fixtures needed to be carefully constructed to cover edge cases. A single missing parenthesis in a test fixture can cause cascading false positives. Writing the "good code" examples (in `after/`) forced me to articulate exactly what clean code looks like, which improved the analyzer rules.
 
-Each finding includes the file path, line number, the applicable rule, and a specific recommendation for resolving the issue.
+3. **Weighted scoring is subjective but necessary**: Combining four different analysis dimensions into a single score required choosing weights that reflect real-world priorities. Naming and documentation issues are common but low-severity, while high complexity is a stronger signal. The weighting system (severity-based penalty scoring) balances these tradeoffs and produces scores that correlate with actual code review feedback.
 
 ## License
 

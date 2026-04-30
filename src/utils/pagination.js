@@ -5,7 +5,10 @@ const MAX_LIMIT = 100;
 function paginate(items, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT) {
   // Validate and normalize inputs
   const normalizedPage = Math.max(1, parseInt(page, 10) || DEFAULT_PAGE);
-  const normalizedLimit = Math.min(MAX_LIMIT, Math.max(1, parseInt(limit, 10) || DEFAULT_LIMIT));
+  const parsedLimit = parseInt(limit, 10);
+  const normalizedLimit = (!parsedLimit || parsedLimit <= 0)
+    ? DEFAULT_LIMIT
+    : Math.min(parsedLimit, MAX_LIMIT);
   
   const totalItems = items.length;
   const totalPages = Math.ceil(totalItems / normalizedLimit);

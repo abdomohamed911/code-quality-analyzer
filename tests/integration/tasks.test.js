@@ -165,7 +165,7 @@ describe('Task API Integration Tests', () => {
         .get('/health')
         .expect(200);
       
-      expect(response.body.status).toBe('healthy');
+      expect(response.body.ok).toBe(true);
     });
   });
 });

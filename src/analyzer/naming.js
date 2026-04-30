@@ -154,7 +154,7 @@ function isCamelCase(str) {
 }
 
 function isPascalCase(str) {
-  return /^[A-Z][a-zA-Z0-9]*$/.test(str);
+  return /^[A-Z]$|^[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]*)*$/.test(str);
 }
 
 function getLineNumbers(code) {

@@ -64,13 +64,18 @@ describe('Cyclomatic Complexity Analyzer', () => {
                   if (e) {
                     for (let i = 0; i < 10; i++) {
                       if (i % 2 === 0) {}
+                      while (false) {}
+                      switch (i) {
+                        case 1: break;
+                        case 2: break;
+                      }
                     }
                   }
                 }
               }
             }
           }
-          return a && b && c && d;
+          return a && b && c && d || e ? 1 : 0;
         }
       `;
       const result = analyzeComplexity(code);
