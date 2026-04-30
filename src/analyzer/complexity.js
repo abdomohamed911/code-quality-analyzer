@@ -33,7 +33,7 @@ function analyzeComplexity(code) {
 function extractFunctions(code) {
   const lines = code.split('\n');
   const functions = [];
-  const functionRegex = /(?:function\s+(\w+)|(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?(?:function|\([^)]*\)\s*=>))/g;
+  const functionRegex = /(?:function\s+(\w+)|(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?(?:function|\([^)]*\)\s*=>|\w+\s*=>))/g;
   let match;
   
   while ((match = functionRegex.exec(code)) !== null) {

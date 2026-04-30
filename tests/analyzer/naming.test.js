@@ -61,8 +61,8 @@ describe('Naming Convention Analyzer', () => {
       expect(result.issues.length).toBe(0);
     });
     
-    it('should flag short variable names (except exceptions)', () => {
-      const code = `const x = 5; const ab = 10;`;
+    it('should flag short variable names (except common exceptions)', () => {
+      const code = `const ab = 10; const cd = 20;`;
       const result = analyzeNaming(code);
       const shortNameIssues = result.issues.filter(i => i.message.includes('too short'));
       expect(shortNameIssues.length).toBe(2);

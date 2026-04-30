@@ -109,12 +109,19 @@ function checkErrorTypeChecking(code, issues) {
   while ((match = catchRegex.exec(code)) !== null) {
     const errorVar = match[1];
     const catchStart = match.index;
-    const catchEnd = findMatchingBrace(code, match.index + match[0].length - 1);
-    const catchBlock = code.substring(catchStart, catchEnd);
+    const afterCatchDecl = match.index + match[0].length;
+    
+    // Find the opening brace of the catch body
+    const openBracePos = code.indexOf('{', afterCatchDecl);
+    if (openBracePos === -1) continue;
+    
+    const catchEnd = findMatchingBrace(code, openBracePos);
+    // Search only in the catch body, excluding the catch declaration
+    const catchBody = code.substring(openBracePos, catchEnd);
     const line = lineNumbers[catchStart];
     
-    // Check if error is used at all
-    if (!catchBlock.includes(errorVar)) {
+    // Check if error is used in the catch body (not the declaration)
+    if (!catchBody.includes(errorVar)) {
       issues.push({
         type: 'unused_error',
         line,
@@ -124,13 +131,13 @@ function checkErrorTypeChecking(code, issues) {
     }
     
     // Check for proper error type checking
-    const hasTypeCheck = catchBlock.includes('instanceof Error') ||
-                         catchBlock.includes('instanceof TypeError') ||
-                         catchBlock.includes('instanceof SyntaxError') ||
-                         catchBlock.includes('.message') ||
-                         catchBlock.includes('.stack');
+    const hasTypeCheck = catchBody.includes('instanceof Error') ||
+                         catchBody.includes('instanceof TypeError') ||
+                         catchBody.includes('instanceof SyntaxError') ||
+                         catchBody.includes('.message') ||
+                         catchBody.includes('.stack');
     
-    if (!hasTypeCheck && catchBlock.includes(errorVar)) {
+    if (!hasTypeCheck && catchBody.includes(errorVar)) {
       issues.push({
         type: 'no_type_check',
         line,

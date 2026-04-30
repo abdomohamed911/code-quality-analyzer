@@ -3,8 +3,7 @@ const taskService = require('../../src/services/taskService');
 describe('Task Service', () => {
   beforeEach(() => {
     // Clear the store before each test
-    const store = require('../../src/services/taskService');
-    // Reset by creating fresh instances
+    taskService.resetStore();
   });
   
   describe('create', () => {
@@ -27,7 +26,7 @@ describe('Task Service', () => {
     });
     
     it('should throw error for missing title', () => {
-      expect(() => taskService.create({})).toThrow('Title is required');
+      expect(() => taskService.create({})).toThrow('Task title is required and must be a non-empty string');
     });
     
     it('should throw error for invalid priority', () => {
